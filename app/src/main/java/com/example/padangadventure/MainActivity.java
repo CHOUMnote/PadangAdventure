@@ -34,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView hawawa;
     Intent first;
     TextView nameBlank;
-    UserData userData;
-    //int loginCount;
+    //UserData userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +45,18 @@ public class MainActivity extends AppCompatActivity {
         nameBlank = findViewById(R.id.name_blank);
         //File logCheck = new File(getFilesDir() + "LogIn.txt");
 
-        first = new Intent(this, NameActivity.class);
-        startActivityForResult(first, 1);
-
+        if (!(new File(getFilesDir() + "/name.txt").exists())){
+            first = new Intent(this, NameActivity.class);
+            startActivityForResult(first, 1);
+        }else{
+            try {
+                BufferedReader nameReader = new BufferedReader(new FileReader(getFilesDir() + "/name.txt"));
+                final String name = nameReader.readLine();
+                Toast.makeText(this, name+"님 또뵙네요", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         /*if (logCheck.exists()) {
              try {
                 BufferedReader br = new BufferedReader(new FileReader(getFilesDir() + "LogIn.txt"));
@@ -71,7 +79,13 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 //데이터 받기
                 String name = data.getStringExtra("name");//적은 이름 저장
-
+                try {
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "/name.txt", true));
+                    bw.write(name);
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                     /*try {
                         BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + name + ".txt", true));
                         BufferedReader bReader = new BufferedReader(new FileReader(getFilesDir() + name + ".txt"));
@@ -92,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void hide_event(View v) { //이스터에그
         count++;
-        File file = new File(getFilesDir() + "achive_1.txt");
+        //File file = new File(getFilesDir() + "achive_1.txt");
         if (count == 20)
-            if (file.exists()) {
+            if (new File(getFilesDir() + "/achive1.txt").exists()) {
             } else {
                 try {
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "achive_1.txt", true));
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "/achive1.txt", true));
                     bw.write("하와와 여고생쟝인 거시야요~");
                     bw.close();
                     Toast.makeText(this, "업적 +1!!", Toast.LENGTH_SHORT).show();
@@ -106,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "경고! : " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
-
         if (count > 19) {
             hawawa.setImageResource(R.drawable.girl_padang2);
             Thread thread1 = new Thread() {
@@ -124,11 +137,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-        public void onClick_achive (View v){
+        public void onClick_achive (View v){//업적 이동
             Intent intent = new Intent(this, AchevementList.class);
             startActivity(intent);
         }
-        public void mOnPopupClick (View v){
+        public void mOnPopupClick (View v){//저작권 이동
             Intent intent = new Intent(this, PopupActivity.class);
             startActivity(intent);
         }

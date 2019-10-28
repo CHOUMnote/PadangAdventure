@@ -26,7 +26,7 @@ public class AchevementList extends AppCompatActivity {
 
     private void dataSetting() {
         //업적들
-        File file = new File(getFilesDir() + "achive_1.txt"); //1번 하와와 여고생쟝
+        File file = new File(getFilesDir() + "/achive1.txt"); //1번 하와와 여고생쟝
 
         MyAdapter mMyAdapter = new MyAdapter();
         if (file.exists()) {
