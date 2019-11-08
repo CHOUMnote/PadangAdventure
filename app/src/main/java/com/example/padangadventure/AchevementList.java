@@ -18,7 +18,7 @@ public class AchevementList extends AppCompatActivity {
         setContentView(R.layout.achive_lay);
 
         /* 위젯과 멤버변수 참조 획득 */
-        mListView = (ListView)findViewById(R.id.listView);
+        mListView = findViewById(R.id.listView);
 
         /* 아이템 추가 및 어댑터 등록 */
         dataSetting();

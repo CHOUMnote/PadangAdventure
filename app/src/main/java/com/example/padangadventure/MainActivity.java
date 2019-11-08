@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView hawawa;
     Intent first;
     TextView nameBlank;
-    //UserData userData;
-
+    String name;
+    String sendName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         BgmPlayer bgm = new BgmPlayer();        //배경음악
         hawawa = findViewById(R.id.MAIN_touch_event);
         nameBlank = findViewById(R.id.name_blank);
-        //File logCheck = new File(getFilesDir() + "LogIn.txt");
 
+        //File logCheck = new File(getFilesDir() + "LogIn.txt");
         if (!(new File(getFilesDir() + "/name.txt").exists())){
             first = new Intent(this, NameActivity.class);
             startActivityForResult(first, 1);
@@ -78,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 //데이터 받기
-                String name = data.getStringExtra("name");//적은 이름 저장
+                name = data.getStringExtra("name");//적은 이름 저장
+                sendName = name+"";
                 try {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "/name.txt", true));
                     bw.write(name);
@@ -86,18 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                    /*try {
-                        BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + name + ".txt", true));
-                        BufferedReader bReader = new BufferedReader(new FileReader(getFilesDir() + name + ".txt"));
-                        BufferedWriter login = new BufferedWriter(new FileWriter(getFilesDir() + "LogIn.txt", true));//로그인 기록
-                        bw.write(name+"");
-                        login.write(name+"");
-                        userData = new UserData(bReader.readLine()+"");
-                        bw.close();
-                        bReader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
                 nameBlank.setText(name + "님 환영합니다.");
                 Toast.makeText(this, "안녕하세요 " + name + "님 파댕월드에 오신걸 환영합니다.", Toast.LENGTH_LONG).show();
             }
@@ -137,6 +126,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+        public void gameStart(View v){
+            Intent intent = new Intent(this, MainGame.class);
+            startActivity(intent);
+            mp.pause();
+        }
         public void onClick_achive (View v){//업적 이동
             Intent intent = new Intent(this, AchevementList.class);
             startActivity(intent);

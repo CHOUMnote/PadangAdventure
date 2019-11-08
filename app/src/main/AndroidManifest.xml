@@ -11,13 +11,14 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".PopupActivity" android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".NameActivity" android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".AchevementList" />
+        <activity android:name=".AchevementList"/>
+        <activity android:name=".MainGame"/>
+
     </application>
 
 </manifest>

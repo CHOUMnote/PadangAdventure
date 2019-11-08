@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/anim_back" />
+        app:srcCompat="@drawable/blackcow" />
 
     <ImageView
         android:id="@+id/MAIN_touch_event"
@@ -31,6 +31,7 @@
         android:id="@+id/start_img"
         android:layout_width="220dp"
         android:layout_height="65dp"
+        android:onClick="gameStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
