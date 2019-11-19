@@ -4,11 +4,16 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -16,12 +21,21 @@ import java.io.FileReader;
 
 public class MainGame extends AppCompatActivity {
     Switch bgmContorl;
-    TextView tv;
     UserData user;
+    Story story;
+    ConstraintLayout tt;
+    TextView tv;
+    Button YES,NO;
+    ImageView img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_start);
+        tv = findViewById(R.id.tv);
+        img = findViewById(R.id.inImg);
+        YES = findViewById(R.id.bnt_YES);
+        NO = findViewById(R.id.bnt_NO);
+        tt = findViewById(R.id.img_lay);
         final BgmPlayer bgm = new BgmPlayer();
         bgmContorl = findViewById(R.id.sound_of);
         bgmContorl.setOnClickListener(new View.OnClickListener(){
@@ -30,16 +44,52 @@ public class MainGame extends AppCompatActivity {
                 bgm.checkSound();
             }
         });
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(getFilesDir()+"/name.txt"));
-            user = new UserData(br.readLine()+"");
-            br.close();
-        } catch (Exception e) { }
-        //유저정보 넘어오는거 확인
-        tv = findViewById(R.id.aa);
-        tv.setText(user.getName());
+
+        story = new Story(user, tv, tt, YES, NO);
+
+        tt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {    //3의 버튼
+
+            }
+        });
+        YES.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {    //예스 버튼
+                story.count++;
+                story.choose = true;
+                story.storyStart();
+            }
+        });
+        NO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {    //노 버튼
+                story.count++;
+                story.choose = false;
+                story.storyStart();
+            }
+        });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     class BgmPlayer{//브금 컨트롤
         MediaPlayer mp;
         BgmPlayer() {
@@ -57,4 +107,10 @@ public class MainGame extends AppCompatActivity {
             }
         }
     }
+
+    //@Override
+    //public void onBackPressed() {
+    //    //안드로이드 백버튼 막기
+      //  return;
+    //}
 }

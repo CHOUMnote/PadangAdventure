@@ -28,7 +28,7 @@ public class NameActivity extends Activity {
         //데이터 전달하기
         if(name.getText()+"" != "") {
             Intent intent = new Intent();
-            intent.putExtra("name", name.getText() + "");
+            intent.putExtra("name", name.getText() + " ");
             setResult(RESULT_OK, intent);
 
             //액티비티(팝업) 닫기

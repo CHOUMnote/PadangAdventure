@@ -30,7 +30,7 @@ public class AchevementList extends AppCompatActivity {
 
         MyAdapter mMyAdapter = new MyAdapter();
         if (file.exists()) {
-            mMyAdapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star), "하와와", "여고생쟝");}
+            mMyAdapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star), "하와와 여고생쟝", UserData.getName()+"님 달성");}
 
         /* 리스트뷰에 어댑터 등록 */
         mListView.setAdapter(mMyAdapter);

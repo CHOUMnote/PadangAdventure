@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -26,16 +27,19 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 //메인 화면
 public class MainActivity extends AppCompatActivity {
     MediaPlayer mp;
     int count = 0;
     ImageView hawawa;
+    Button reset;
     Intent first;
     TextView nameBlank;
     String name;
-    String sendName;
+    String[] strToken;
+    UserData user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,52 +47,52 @@ public class MainActivity extends AppCompatActivity {
         BgmPlayer bgm = new BgmPlayer();        //배경음악
         hawawa = findViewById(R.id.MAIN_touch_event);
         nameBlank = findViewById(R.id.name_blank);
+        reset = findViewById(R.id.reset);
 
-        //File logCheck = new File(getFilesDir() + "LogIn.txt");
-        if (!(new File(getFilesDir() + "/name.txt").exists())){
+
+                //File logCheck = new File(getFilesDir() + "LogIn.txt");
+        if (!(new File(getFilesDir() + "/name.txt").exists())){//없으면...
             first = new Intent(this, NameActivity.class);
             startActivityForResult(first, 1);
-        }else{
+        }else{//있으면...
             try {
                 BufferedReader nameReader = new BufferedReader(new FileReader(getFilesDir() + "/name.txt"));
-                final String name = nameReader.readLine();
-                Toast.makeText(this, name+"님 또뵙네요", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                name = nameReader.readLine();
+                nameReader.close();
+                strToken = name.split(" ");
+//                user = new UserData(strToken[strToken.length-1]);
+//                Toast.makeText(this, user.getName()+"님 환영합니다.", Toast.LENGTH_SHORT).show();
+//                nameBlank.setText(user.getName() + "님 환영합니다.");
+            } catch (IOException e) {   }
+            user = new UserData(strToken[strToken.length-1]);
+            Toast.makeText(this, user.getName()+"님 환영합니다.", Toast.LENGTH_SHORT).show();
+            nameBlank.setText(user.getName() + "님 환영합니다.");
         }
-        /*if (logCheck.exists()) {
-             try {
-                BufferedReader br = new BufferedReader(new FileReader(getFilesDir() + "LogIn.txt"));
-                userData = new UserData(br.readLine()+"");
-                nameBlank.setText(br.readLine() + "님 환영합니다.");
-                Toast.makeText(this, "안녕하세요 " + br.readLine()+ "님 파댕월드에 오신걸 환영합니다.", Toast.LENGTH_LONG).show();
-                br.close();
-            } catch (Exception e) {
-                e.printStackTrace();            }
-        } else {
-            first = new Intent(this, NameActivity.class);//이름입력
-            startActivityForResult(first, 1);
-            }*/
+    }
+
+    public void nameReset(View v){
+        first = new Intent(this, NameActivity.class);
+        startActivityForResult(first, 1);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {//시작 일름 검색
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {//시작 이름 검색
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 //데이터 받기
                 name = data.getStringExtra("name");//적은 이름 저장
-                sendName = name+"";
                 try {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "/name.txt", true));
                     bw.write(name);
                     bw.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                nameBlank.setText(name + "님 환영합니다.");
-                Toast.makeText(this, "안녕하세요 " + name + "님 파댕월드에 오신걸 환영합니다.", Toast.LENGTH_LONG).show();
+                    BufferedReader nameReader = new BufferedReader(new FileReader(getFilesDir() + "/name.txt"));
+                    strToken = nameReader.readLine().split(" ");
+                    nameReader.close();
+                } catch (IOException e) {   }
+                user = new UserData(strToken[strToken.length-1]);
+                nameBlank.setText(user.getName() + "님 환영합니다.");
+                Toast.makeText(this, "안녕하세요 " + user.getName() + "님 파댕월드에 오신걸 환영합니다.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -96,20 +100,19 @@ public class MainActivity extends AppCompatActivity {
     public void hide_event(View v) { //이스터에그
         count++;
         //File file = new File(getFilesDir() + "achive_1.txt");
-        if (count == 20)
+        if (count == 10)
             if (new File(getFilesDir() + "/achive1.txt").exists()) {
             } else {
                 try {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "/achive1.txt", true));
-                    bw.write("하와와 여고생쟝인 거시야요~");
+                    bw.write(UserData.getName());
                     bw.close();
                     Toast.makeText(this, "업적 +1!!", Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
-                    e.printStackTrace();
                     Toast.makeText(this, "경고! : " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
-        if (count > 19) {
+        if (count > 9) {
             hawawa.setImageResource(R.drawable.girl_padang2);
             Thread thread1 = new Thread() {
                 @Override
@@ -126,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-        public void gameStart(View v){
+        public void gameStart(View v){ //게임 시작
             Intent intent = new Intent(this, MainGame.class);
             startActivity(intent);
             mp.pause();
