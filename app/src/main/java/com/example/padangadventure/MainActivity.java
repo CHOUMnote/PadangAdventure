@@ -70,10 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void nameReset(View v){
-        first = new Intent(this, NameActivity.class);
-        startActivityForResult(first, 1);
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {//시작 이름 검색
@@ -129,6 +126,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+        public void nameReset(View v){ //로그아웃
+            first = new Intent(this, NameActivity.class);
+            startActivityForResult(first, 1);
+        }
         public void gameStart(View v){ //게임 시작
             Intent intent = new Intent(this, MainGame.class);
             startActivity(intent);

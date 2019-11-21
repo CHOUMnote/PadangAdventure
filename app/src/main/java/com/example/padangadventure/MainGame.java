@@ -16,8 +16,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class MainGame extends AppCompatActivity {
     Switch bgmContorl;
@@ -27,6 +31,7 @@ public class MainGame extends AppCompatActivity {
     TextView tv;
     Button YES,NO;
     ImageView img;
+    BgmPlayer bgm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +41,7 @@ public class MainGame extends AppCompatActivity {
         YES = findViewById(R.id.bnt_YES);
         NO = findViewById(R.id.bnt_NO);
         tt = findViewById(R.id.img_lay);
-        final BgmPlayer bgm = new BgmPlayer();
+        bgm = new BgmPlayer();
         bgmContorl = findViewById(R.id.sound_of);
         bgmContorl.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -45,30 +50,38 @@ public class MainGame extends AppCompatActivity {
             }
         });
 
-        story = new Story(user, tv, tt, YES, NO);
+        story = new Story(user, tv, img, YES, NO, getFilesDir()+"");
 
         tt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {    //3의 버튼
-
+                if (!story.on) {
+                    story.count++;
+                    story.storyStart();
+                }
             }
         });
         YES.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {    //예스 버튼
-                story.count++;
-                story.choose = true;
-                story.storyStart();
+                if (story.on) {
+                    story.count++;
+                    story.choose = true;
+                    story.storyStart();
+                }
             }
         });
         NO.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {    //노 버튼
-                story.count++;
-                story.choose = false;
-                story.storyStart();
+                if (story.on) {
+                    story.count++;
+                    story.choose = false;
+                    story.storyStart();
+                }
             }
         });
+
     }
 
 
@@ -85,10 +98,11 @@ public class MainGame extends AppCompatActivity {
 
 
 
-
-
-
-
+    public void exit(View v){ //나가기
+        bgm.mp.reset();
+        bgm.mp.pause();
+        finish();
+    }
 
     class BgmPlayer{//브금 컨트롤
         MediaPlayer mp;
