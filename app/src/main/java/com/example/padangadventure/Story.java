@@ -4,6 +4,7 @@ package com.example.padangadventure;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -117,7 +118,7 @@ public class Story {
                 on = false;
             case 18:
                 if(choose) {
-                    textView.setText("사실 회비만 탐내는 하자있는 동아리였다... 돈만 뜯기고 탈주한 나였다... 그리도 전에 봐둔 동아리에 들어갔다");
+                    textView.setText("사실 회비만 탐내는 하자있는 동아리였고 돈만 뜯기고 탈주한 나였다... 그래도 전에 봐둔 동아리가 있어 가입했다");
                     img.setImageResource(R.drawable.ohmymoney);
                 } else {
                     textView.setText("아니다 뭔가 불안해 보인다. 다른 눈에 띄는 동아리가 보인다. 옆에 눈에 동아리로 들어갔다");
@@ -133,11 +134,11 @@ public class Story {
             case 22: textView.setText(user+" : 야 너 공부했어?"); img.setImageResource(R.drawable.naninani);break;
             case 23: textView.setText("무슨 공부? 먹는건가??"); break;
             case 24: textView.setText("냠냠~~"); img.setImageResource(R.drawable.uuueee); break;
-            case 25: textView.setText("친구 : 몰랐어? 다음 주가 시험기간이잖아"); img.setImageResource(R.drawable.naniii); break;
+            case 25: textView.setText(user+" : 몰랐어? 다음 주가 시험기간이잖아"); img.setImageResource(R.drawable.naniii); break;
             case 26: textView.setText("-그렇다 다음주엔 시험을 보는 것이였다.-"); break;
             case 27: textView.setText("갑작스레 다가온 중간고사"); break;
             case 28: textView.setText("지금부터라도 공부를 하겠다고 다짐한 파댕이"); img.setImageResource(R.drawable.hawawarani); break;
-            case 29: textView.setText("갑자기 친구가 PC방을 가자고 한다"); break;
+            case 29: textView.setText("갑자기 "+user+"가 PC방을 가자고 한다"); break;
             case 30: textView.setText("당연히 가야지 시즌 마지막인걸..."); img.setImageResource(R.drawable.heheheheh); break;
             case 31: textView.setText("(하지만 시즌 마지막으라 던지는 유저는 많았다고 한다... 그렇게 혈압겜을 했고"); img.setImageResource(R.drawable.firefire); break;
             case 32: textView.setText("왜 게임이 질병인지 알게된 하루였다. 그리고 시험날이 밝았다."); break;
@@ -179,18 +180,19 @@ public class Story {
             case 39:
                 if(choose){
                     score++;
+                    if(score == 3)
+                        if(!(new File(a+"/achive3.txt").exists())) {
+                            file = new File(a + "/achive3.txt");
+                            try {
+                                br = new BufferedWriter(new FileWriter(file, true));
+                                br.write(UserData.getName());
+                                br.close();
+                            }catch (Exception e){   }
+                        }
                     textView.setText("지금까지"+score+"/3 점!! 수고했습니다 ^^ 문제는 여기까지입니다."); }
                 else
                     textView.setText("수고했습니다 ^^ 문제는 여기까지입니다.");
-                if(score == 3)
-                    if(!(new File(a+"/achive2.txt").exists())) {
-                        file = new File(a + "/achive3.txt");
-                        try {
-                            br = new BufferedWriter(new FileWriter(file, true));
-                            br.write(UserData.getName());
-                            br.close();
-                        }catch (Exception e){   }
-                    }
+
                 on = false;
                 break;
             case 40: textView.setText("그렇게 무사히 시험을 마쳤다. 무려 "+score+"/3 점"); img.setImageResource(R.drawable.dedane); break;

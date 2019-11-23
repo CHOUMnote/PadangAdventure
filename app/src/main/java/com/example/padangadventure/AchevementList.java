@@ -52,7 +52,7 @@ public class AchevementList extends AppCompatActivity{
             br = new BufferedReader(new FileReader(getFilesDir() + "/achive3.txt"));
             name = br.readLine();
             br.close();
-            if (new File(getFilesDir() + "/achive2.txt").exists()) { //3번 일어마스터
+            if (new File(getFilesDir() + "/achive3.txt").exists()) { //3번 일어마스터
                 mMyAdapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.star), "일어마스터??", name+"님 달성");}
         }catch (Exception e){   }
 
