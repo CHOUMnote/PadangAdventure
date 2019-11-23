@@ -4,27 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/blackcow"
     tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/blackcow" />
 
     <ImageView
         android:id="@+id/MAIN_touch_event"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:onClick="hide_event"
-        app:layout_constraintBottom_toBottomOf="@id/background"
-        app:layout_constraintEnd_toEndOf="@id/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/girl_padang" />
 
     <ImageView
@@ -61,8 +50,8 @@
         android:text="도움을 주신분..."
         android:textColor="#00E7FF"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/background"
-        app:layout_constraintStart_toStartOf="@id/background" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/name_blank"
