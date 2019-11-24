@@ -242,6 +242,8 @@ public class Story {
                     }catch (Exception e){   }
                 }
                 img.setImageResource(R.drawable.ending);
+            case 55:
+                textView.setText("하와와를 누르면 무슨일이??");
         }
     }
 }
