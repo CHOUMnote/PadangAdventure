@@ -1,5 +1,13 @@
-# PadangAdventure
+# 2019년 1학년 첫 자바프로젝트
 
-It is my first project, Welcome!!! <br>
-After learning Java and Android studio, I made them to practice. <br>
-It's not enough, but anyone can use it. And welcome back to the feedback.
+**주제 선정 이유와 안드로이드 스튜디오인 이유?**
+
+주변에서 파댕이라는 라이센스를 쉽게 제공 받을수 있었고, 간단한 게임을 구현해 보고자 이 주제를 선정했다. 그리고 자바로 할 수 있는 툴중 안드로이드 스튜디오가 가장 강력하기 때문에 자바연습 및 안드로이드 스튜디오의 개발 환경을 알아 보기 위해 선택함
+
+
+
+------
+
+~~
+
+#### 
